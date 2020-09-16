@@ -32,7 +32,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -b master -d build"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -71,5 +71,5 @@
     "url-loader": "^1.1.2"
   },
   "proxy": "http://localhost:8080",
-  "homepage": "http://hyun8503.github.io/studykorean.git"
+  "homepage": "http://hyun8503.github.io/studykorean"
 }
