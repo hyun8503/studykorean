@@ -71,5 +71,5 @@
     "url-loader": "^1.1.2"
   },
   "proxy": "http://localhost:8080",
-  "homepage": "http://hyun8503.github.io/studykorean"
+  "homepage": "http://hyun8503.github.io/studykorean.git"
 }
