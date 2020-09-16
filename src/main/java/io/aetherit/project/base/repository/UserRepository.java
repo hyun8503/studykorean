@@ -28,4 +28,7 @@ public class UserRepository {
     public int insertUser(BaseUser user) {
         return mapper.insertUser(user);
     }
+    public long selectUserIdCount(String id) {
+        return mapper.selectUserIdCount(id);
+    }
 }

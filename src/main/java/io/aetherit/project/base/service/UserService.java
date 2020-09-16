@@ -1,5 +1,7 @@
 package io.aetherit.project.base.service;
 
+import io.aetherit.project.base.exception.BaseException;
+import io.aetherit.project.base.exception.ErrorCode;
 import io.aetherit.project.base.exception.NotAcceptableIdException;
 import io.aetherit.project.base.model.support.BaseUserType;
 import io.aetherit.project.base.repository.UserRepository;
@@ -7,14 +9,17 @@ import io.aetherit.project.base.model.BaseUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -54,6 +59,11 @@ public class UserService {
                     .id(DEFAULT_ADMIN_ID)
                     .password(DEFAULT_ADMIN_PASSWORD)
                     .name(DEFAULT_ADMIN_NAME)
+                    .email("hyun8503@gmail.com")
+                    .country("South Korea")
+                    .city("seoul")
+                    .userLanguage("Korean")
+                    .selectedLanguage("English")
                     .type(BaseUserType.Admin)
                     .isEnabled(true)
                     .build();
@@ -61,6 +71,25 @@ public class UserService {
             createNewUser(newAdmin);
         }
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void insertUser(BaseUser user) {
+        userIdDuplicateCheck(user.getId());
+
+        user.setId(UUID.randomUUID().toString());
+        user.setCreatedDatetime(LocalDateTime.now());
+        user.setUpdatedDatetime(LocalDateTime.now());
+//      userRepository.insertUser(user);
+    }
+
+    private void userIdDuplicateCheck(String id) {
+        long count = repository.selectUserIdCount(id);
+
+        if(count != 0) {
+            throw new BaseException(ErrorCode.Unknown, HttpStatus.BAD_REQUEST, "Id must be unique");
+        }
+    }
+
 
     public BaseUser getUser(String id) {
         return repository.selectUser(id);

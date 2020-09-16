@@ -12,6 +12,7 @@ import SideMenu from "./components/SideMenu";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./views/Home";
 import SignIn from "./views/SignIn";
+import SignUp from "./views/SignUp";
 import * as store from "./stores/AuthStore";
 
 
@@ -39,7 +40,7 @@ class App extends React.Component {
         const axiosRequestInterceptors = (config) => {
             const token = localStorage.getItem(store.LocalStorageTokenKey);
 
-            if(token) {
+            if (token) {
                 config.headers['X-Auth-Token'] = token;
             }
 
@@ -51,7 +52,7 @@ class App extends React.Component {
         };
 
         const axiosResponseInterceptor = (response) => {
-            if(response.status === 403) {
+            if (response.status === 403) {
                 this.props.authStore.invalidateLogin();
             }
 
@@ -59,7 +60,7 @@ class App extends React.Component {
         };
 
         const axiosResponseErrorHandler = (error) => {
-            if((error.response) && (error.response.status === 403)) {
+            if ((error.response) && (error.response.status === 403)) {
                 this.props.authStore.invalidateLogin();
             }
 
@@ -78,38 +79,43 @@ class App extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const { loginState } = this.props.authStore;
+        const {classes} = this.props;
+        const {loginState} = this.props.authStore;
 
         return (
             <div className={classes.root}>
                 <Router>
-                    <CssBaseline />
+                    <CssBaseline/>
 
                     <Route path="/" component={ScrollToTop}>
                         <TopBar mobileOpen={this.state.mobileOpen}
                                 setMobileOpen={this.setMobileOpen}
                                 isLoggedIn={loginState === store.State.Authenticated}
-                                doLogout={() => this.props.authStore.doLogout()} />
-                        <SideMenu mobileOpen={this.state.mobileOpen}
-                                  setMobileOpen={this.setMobileOpen}
-                                  isLoggedIn={loginState === store.State.Authenticated} />
+                                doLogout={() => this.props.authStore.doLogout()}/>
+                        {/*<SideMenu mobileOpen={this.state.mobileOpen}*/}
+                        {/*          setMobileOpen={this.setMobileOpen}*/}
+                        {/*          isLoggedIn={loginState === store.State.Authenticated} />*/}
 
                         {loginState === store.State.Authenticated ? (
                             <React.Fragment>
-                              <Switch>
-                                <Route exact path="/" component={Home} />
-                                <Route exact path="/home" component={Home} />
-                              </Switch>
+                                <Switch>
+                                    <Route exact path="/" component={Home}/>
+                                    <Route exact path="/home" component={Home}/>
+                                </Switch>
                             </React.Fragment>
                         ) : (
-                            <Route path="/" component={SignIn} />
+                            <React.Fragment>
+                                <Switch>
+                                    <Route exact path="/" component={SignIn}/>
+                                    <Route exact path="/signUp" component={SignUp}/>
+                                </Switch>
+                            </React.Fragment>
                         )}
-                  </Route>
+                    </Route>
                 </Router>
             </div>
         );
     }
 };
 
-export default withStyles(style) (App);
+export default withStyles(style)(App);

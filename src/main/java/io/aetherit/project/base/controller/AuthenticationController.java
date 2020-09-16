@@ -5,6 +5,7 @@ import io.aetherit.project.base.service.AuthenticationService;
 import io.aetherit.project.base.model.BaseSimpleUser;
 import io.aetherit.project.base.model.BaseUser;
 import io.aetherit.project.base.model.BaseUserToken;
+import io.aetherit.project.base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,12 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/api/v1/authentications/")
 public class AuthenticationController {
     private AuthenticationService authenticationService;
+    private UserService userService;
 
     @Autowired
-    public AuthenticationController(AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService, UserService userService) {
         this.authenticationService = authenticationService;
+        this.userService = userService;
     }
 
     @PostMapping("/signin")
@@ -44,6 +47,13 @@ public class AuthenticationController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @PostMapping("/user/signup")
+    public ResponseEntity<Object> insertUser(HttpServletRequest httpRequest, @RequestBody BaseUser param) throws Exception{
+        userService.insertUser(param);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @GetMapping("/signcheck")
     public ResponseEntity<BaseSimpleUser> check(HttpServletRequest httpRequest) {

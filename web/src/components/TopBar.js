@@ -1,41 +1,72 @@
 import React from "react";
-import {Link} from "react-router-dom";
-
 import {makeStyles} from "@material-ui/core/styles";
-import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
-import MenuIcon from '@material-ui/icons/Menu';
+import {AppBar, IconButton, Toolbar} from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import {observer} from "mobx-react";
+import {useStores} from "../stores";
+import {Link, useHistory} from "react-router-dom";
+import {AccountCircle, Search as SearchIcon} from "@material-ui/icons";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import InputBase from "@material-ui/core/InputBase";
+import ProfileDialog from "../views/ProfileDialog";
 
-const logoWidth = 120;
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
-        [theme.breakpoints.up('sm')]: {
-            width: `calc(100% - ${theme.drawerWidth}px)`,
-            marginLeft: theme.drawerWidth,
+        zIndex: theme.zIndex.drawer + 1,
+        backgroundColor: 'white',
+        color: 'red',
+        '& .MuiToolbar-gutters': {
+            paddingRight: 0,
+            paddingLeft: 0
         },
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
+    toolBar: {
+        [theme.breakpoints.down("xs")]: {},
+        height: '50px',
+        '& .MuiContainer-root': {
+            paddingRight: 0,
+            paddingLeft: 0,
         },
+
     },
-    title: {
-        marginLeft: (theme.sideMenuWidth - logoWidth) / 2,
-        paddingLeft: theme.spacing(3),
-        flexGrow: 1,
+    formControl: {
+        [theme.breakpoints.down("xs")]: {
+            width: '100%',
+        },
+        width: '50%',
     },
-    link: {
-        textDecoration: 'none',
-        color: 'inherit',
-    }
+    inputBase: {
+        [theme.breakpoints.down("xs")]: {
+            margin: '5px 0',
+        },
+        border: '1px solid gray',
+        margin: '10px 0',
+        padding: 5,
+        borderRadius: 5,
+
+    },
+    flexCenter: {
+        height: '100%',
+        display: "flex",
+        justifyContent: 'center',
+        justifyItems: 'center',
+    },
+    inlineCenter: {
+        display: 'inline-block',
+        margin: '0 auto',
+        textAlign: 'center',
+    },
+
 }));
 
-export default function TopBar(props) {
+const TopBar = observer((props) => {
     const classes = useStyles();
-    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout } = props;
-
+    const {mobileOpen, setMobileOpen, isLoggedIn, doLogout} = props;
+    const {profileStore} = useStores();
+    const history = useHistory();
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -43,29 +74,56 @@ export default function TopBar(props) {
     return (
         <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={handleDrawerToggle}
-                    className={classes.menuButton}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap className={classes.title}>
-                    <Link to='/' className={classes.link}>
-                        Project Base
-                    </Link>
-                </Typography>
+                <Container className={classes.flexCenter}>
+                    <Grid item xs={2} sm={1} className={classes.flexCenter}
+                          onClick={() => {history.push("/")}}
+                    >
+                        <img src={"logo192.png"} alt="??" style={{width: '60%', height: '40px', margin: 10}}/>
+                    </Grid>
 
-                { isLoggedIn ? (
-                    <IconButton color="inherit" onClick={doLogout}>
-                        <ExitToAppIcon />
-                    </IconButton>
-                ) : (
-                    ''
-                )}
+                    <Grid item xs={8} sm={10}
+                    >
+                        <FormControl className={classes.formControl}>
+                            <InputBase
+                                className={classes.inputBase}
+                                fullWidth
+                                placeholder={"Language to Learn"}
+                                inputProps={{'aria-label': 'search'}}
+                                endAdornment={<SearchIcon style={{color: 'red'}}/>}
+                            >
+                            </InputBase>
+                        </FormControl>
+                    </Grid>
+
+
+
+
+                    {isLoggedIn ? (
+
+                        <Grid item xs={4} sm={2}>
+                            <IconButton onClick={() => profileStore.changeProfileDialog(true)}>
+                                <AccountCircle/>
+                            </IconButton>
+
+                            <IconButton color="inherit" onClick={doLogout}>
+                                <ExitToAppIcon/>
+                            </IconButton>
+                        </Grid>
+                    ) : (
+                        <Grid item xs={4} sm={2}>
+                            <div className={classes.flexCenter} style={{marginTop: 20}} onClick={() => {history.push("/signUp")}} >
+                                JOIN
+                            </div>
+                        </Grid>
+                    )}
+
+
+                </Container>
+
             </Toolbar>
+            <ProfileDialog/>
         </AppBar>
     );
-}
+})
+
+export default TopBar;

@@ -9,4 +9,5 @@ public interface UserMapper {
     BaseUser selectUser(String id);
     List<BaseUser> selectUsersWhereType(BaseUserType type);
     int insertUser(BaseUser account);
+    long selectUserIdCount(String id);
 }

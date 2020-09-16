@@ -6,9 +6,27 @@ export const State = {
     NotAuthenticated: 'NotAuthenticated',
     Pending: 'Pending',
     Failed: 'Failed',
+    SignupPending: 'SignupPending',
+    SignupFailed: 'SignupFailed'
 };
 
 export const LocalStorageTokenKey = '_BASKITOP_AUTHENTICATION_TOKEN_';
+
+
+const EmptySignup = {
+    id: '',
+    password: '',
+    name: '',
+    email: '',
+    country: '',
+    city:'',
+    userLanguage:'',
+    selectedLanguage:'',
+    type: '',
+    createdDatetime: '',
+    updatedDatetime: '',
+};
+
 
 const EmptyLogin = {
     id: '',
@@ -43,6 +61,25 @@ export default class AuthStore {
         this.loginToken = '';
         this.loginUser = Object.assign({}, EmptyUser);
     };
+
+
+
+    doSignup = flow(function* doSignup(callback, callback_failed) {
+        this.loginState = State.SignupPending;
+
+        try {
+            const response = yield axios.post('/api/v1/authentications/signup', EmptySignup);
+            if (response.status === 200) {
+                this.loginState = State.NotAuthenticated;
+                callback();
+            }
+        } catch (e) {
+            this.loginState = State.SignupFailed;
+            this.loginToken = '';
+            callback_failed();
+        }
+    });
+
 
     doLogin = flow(function* doLogin() {
         this.loginState = State.Pending;

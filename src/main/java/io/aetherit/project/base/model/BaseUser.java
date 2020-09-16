@@ -16,6 +16,11 @@ public class BaseUser {
     private String id;
     private String password;
     private String name;
+    private String email;
+    private String country;
+    private String city;
+    private String userLanguage;
+    private String selectedLanguage;
     private BaseUserType type;
     private boolean isEnabled;
     private LocalDateTime createdDatetime;
