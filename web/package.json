@@ -32,7 +32,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+
   },
   "eslintConfig": {
     "extends": "react-app"
