@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/studykorean2/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/studykorean2/static/js/main.9174bf31.chunk.js",
+    "main.js.map": "/studykorean2/static/js/main.9174bf31.chunk.js.map",
+    "runtime-main.js": "/studykorean2/static/js/runtime-main.072e38f2.js",
+    "runtime-main.js.map": "/studykorean2/static/js/runtime-main.072e38f2.js.map",
+    "static/js/2.e021249d.chunk.js": "/studykorean2/static/js/2.e021249d.chunk.js",
+    "static/js/2.e021249d.chunk.js.map": "/studykorean2/static/js/2.e021249d.chunk.js.map",
+    "index.html": "/studykorean2/index.html",
+    "precache-manifest.66bf95f211c39a82c67f01faad8460f4.js": "/studykorean2/precache-manifest.66bf95f211c39a82c67f01faad8460f4.js",
+    "service-worker.js": "/studykorean2/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/studykorean2/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.e021249d.chunk.js.LICENSE.txt": "/studykorean2/static/js/2.e021249d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.072e38f2.js",
+    "static/js/2.e021249d.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.9174bf31.chunk.js"
+  ]
+}
