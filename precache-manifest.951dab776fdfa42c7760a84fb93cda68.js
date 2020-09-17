@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "16aea9261db2d26433109a8059bf592e",
+    "revision": "bc4161f7316c64aebeec40b448dbb0a0",
     "url": "/studykorean2/index.html"
   },
   {
-    "revision": "4ae762ea657b791f91ba",
+    "revision": "e087920fe43d3bfcc454",
     "url": "/studykorean2/static/css/main.5ecd60fb.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/studykorean2/static/js/2.e021249d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4ae762ea657b791f91ba",
-    "url": "/studykorean2/static/js/main.9174bf31.chunk.js"
+    "revision": "e087920fe43d3bfcc454",
+    "url": "/studykorean2/static/js/main.0e1aad8c.chunk.js"
   },
   {
     "revision": "f5cab8951f61460f7c25",
